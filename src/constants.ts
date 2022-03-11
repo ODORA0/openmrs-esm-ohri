@@ -127,6 +127,7 @@ export const covidVaccineConcept_UUID = '0cc868bd-e9dd-4b59-b278-f923afe22d82';
 // HTS HIV
 export const hivTestResultConceptUUID = 'e16b0068-b6a2-46b7-aba9-e3be00a7b4ab';
 export const hivTestDateConceptUUID = '140414BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB';
+export const htsStrategyUUID = 'f0d85da0-c235-4540-a0d1-63640594f98b';
 
 //HIV Art Therapy
 export const art_Therapy_EncounterUUID = '779d3f30-4b5a-45eb-948e-16c1b32c04d0';
