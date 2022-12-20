@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { EncounterList, EncounterListColumn, getObsFromEncounter } from '@ohri/openmrs-esm-ohri-commons-lib';
 import {
   pTrackerIdConcept,
-  visitDate,
-  hivTestStatus,
   infantPostnatalEncounterType,
   nextVisitDate,
   artProphylaxisStatus,
