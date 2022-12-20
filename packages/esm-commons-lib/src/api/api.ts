@@ -222,3 +222,12 @@ export function fetchConceptNameByUuid(conceptUuid: string) {
     }
   });
 }
+
+export async function getMotherName(patientUUID: string) {
+  openmrsFetch(`/ws/fhir2/R4/Patient/${patientUUID}`).then(({ data }) => {
+    if (data.name?.length) {
+      return data.name[0].given.join(' ') + ' ' + data.name[0].family;
+    }
+    return '--';
+  });
+}

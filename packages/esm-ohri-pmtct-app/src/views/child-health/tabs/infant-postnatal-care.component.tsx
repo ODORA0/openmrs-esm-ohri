@@ -1,6 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { EncounterList, EncounterListColumn, getObsFromEncounter } from '@ohri/openmrs-esm-ohri-commons-lib';
+import {
+  EncounterList,
+  EncounterListColumn,
+  getMotherName,
+  getObsFromEncounter,
+} from '@ohri/openmrs-esm-ohri-commons-lib';
 import {
   pTrackerIdConcept,
   visitDate,
@@ -14,6 +19,7 @@ import {
   ChildPDateOfBirth,
 } from '../../../constants';
 import { moduleName } from '../../..';
+import { openmrsFetch } from '@openmrs/esm-framework';
 
 interface InfantPostnatalListProps {
   patientUuid: string;
@@ -22,6 +28,62 @@ interface InfantPostnatalListProps {
 const InfantPostnatalList: React.FC<InfantPostnatalListProps> = ({ patientUuid }) => {
   const { t } = useTranslation();
   const headerTitle = t('infantPostnatalCare', 'Infant Postnatal Care');
+
+  const [motherName, setMotherName] = useState('--');
+
+  // useEffect(() => {
+  //   const asyncFunction = async () => {
+  //     try {
+  //       const firstResponse = await openmrsFetch(`/ws/fhir2/R4/Patient/${window.location.pathname.split('/')[4]}`);
+  //       firstResponse.then((data) => {
+  //         console.log(data);
+  //         if (data.name?.length) {
+  //           setMotherName(data.name[0].given.join(' ') + ' ' + data.name[0].family);
+  //         }
+  //       });
+  //     } catch (error) {
+  //       return error;
+  //     }
+  //   };
+  //   asyncFunction();
+  // });
+
+  // useEffect(() => {
+  //   fetchMotherName();
+  // }, []);
+
+  useEffect(() => {
+    const asyncFunction = async () => {
+      try {
+        const firstResponse = await openmrsFetch(`/ws/fhir2/R4/Patient/${window.location.pathname.split('/')[4]}`).then(
+          ({ data }) => {
+            console.log(data);
+            if (data.name?.length) {
+              console.log(data.name[0].given.join(' ') + ' ' + data.name[0].family);
+              return data.name[0].given.join(' ') + ' ' + data.name[0].family;
+            }
+            return '--';
+          },
+        );
+
+        console.log(`values`, [firstResponse]);
+        setMotherName(firstResponse);
+      } catch (error) {
+        return error;
+      }
+    };
+    asyncFunction();
+  });
+
+  // const fetchMotherName = async () => {
+  //   const response = await openmrsFetch(`/ws/fhir2/R4/Patient/${window.location.pathname.split('/')[4]}`);
+  //   console.log(response);
+  //   if (response.data) {
+  //     console.log(response.data);
+  //     setMotherName(response.data.name[0].given.join(' ') + ' ' + response.data.name[0].family);
+  //     return response.data.name[0].given.join(' ') + ' ' + response.data.name[0].family;
+  //   }
+  // };
 
   const columns: EncounterListColumn[] = useMemo(
     () => [
@@ -43,7 +105,7 @@ const InfantPostnatalList: React.FC<InfantPostnatalListProps> = ({ patientUuid }
         key: 'mothersName',
         header: t('mothersName', 'Mothers Name'),
         getValue: (encounter) => {
-          return getObsFromEncounter(encounter, '--');
+          return motherName;
         },
       },
       {
