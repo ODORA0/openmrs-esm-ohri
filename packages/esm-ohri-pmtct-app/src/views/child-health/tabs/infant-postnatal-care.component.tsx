@@ -31,27 +31,6 @@ const InfantPostnatalList: React.FC<InfantPostnatalListProps> = ({ patientUuid }
 
   const [motherName, setMotherName] = useState('--');
 
-  // useEffect(() => {
-  //   const asyncFunction = async () => {
-  //     try {
-  //       const firstResponse = await openmrsFetch(`/ws/fhir2/R4/Patient/${window.location.pathname.split('/')[4]}`);
-  //       firstResponse.then((data) => {
-  //         console.log(data);
-  //         if (data.name?.length) {
-  //           setMotherName(data.name[0].given.join(' ') + ' ' + data.name[0].family);
-  //         }
-  //       });
-  //     } catch (error) {
-  //       return error;
-  //     }
-  //   };
-  //   asyncFunction();
-  // });
-
-  // useEffect(() => {
-  //   fetchMotherName();
-  // }, []);
-
   useEffect(() => {
     const asyncFunction = async () => {
       try {
