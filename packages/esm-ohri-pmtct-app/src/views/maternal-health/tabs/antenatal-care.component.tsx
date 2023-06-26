@@ -14,6 +14,8 @@ import {
 } from '../../../constants';
 import { moduleName } from '../../../index';
 import { getEstimatedDeliveryDate } from '../../../api/api';
+import { useLocation } from 'react-router-dom';
+import { useSession } from '@openmrs/esm-framework';
 
 interface AntenatalCareListProps {
   patientUuid: string;
@@ -63,17 +65,15 @@ const AntenatalCareList: React.FC<AntenatalCareListProps> = ({ patientUuid }) =>
       {
         key: 'edd',
         header: t('edd', 'EDD'),
-        getValue: async (encounter) => {
-          const currentPTrackerId = getObsFromEncounter(encounter, pTrackerIdConcept);
-          const edd = await getEstimatedDeliveryDate(patientUuid, currentPTrackerId);
-          return edd.rows.length ? edd.rows[0].estimated_delivery_date : '---';
+        getValue: (encounter) => {
+          return getObsFromEncounter(encounter, eDDConcept, true);
         },
       },
       {
         key: 'facility',
         header: t('facility', 'Facility'),
-        getValue: (encounter) => {
-          return encounter.location.name;
+        getValue: (patient) => {
+          return patient.location.name;
         },
       },
       {
@@ -95,14 +95,14 @@ const AntenatalCareList: React.FC<AntenatalCareListProps> = ({ patientUuid }) =>
         header: t('actions', 'Actions'),
         getValue: (encounter) => [
           {
-            form: { name: 'antenatal', package: 'maternal_health' },
+            form: { name: 'Antenatal Form', package: 'maternal_health' },
             encounterUuid: encounter.uuid,
             intent: '*',
             label: t('viewDetails', 'View Details'),
             mode: 'view',
           },
           {
-            form: { name: 'antenatal', package: 'maternal_health' },
+            form: { name: 'Antenatal Form', package: 'maternal_health' },
             encounterUuid: encounter.uuid,
             intent: '*',
             label: t('editForm', 'Edit Form'),
@@ -119,7 +119,7 @@ const AntenatalCareList: React.FC<AntenatalCareListProps> = ({ patientUuid }) =>
       patientUuid={patientUuid}
       encounterType={antenatalEncounterType}
       // TODO: replace with form name as configured in the backend.
-      formList={[{ name: 'antenatal' }]}
+      formList={[{ name: 'Antenatal Form' }]}
       columns={columns}
       description={headerTitle}
       headerTitle={headerTitle}

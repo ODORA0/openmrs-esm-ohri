@@ -11,11 +11,11 @@ import {
 } from '../../../constants';
 import { moduleName } from '../../../index';
 
-interface HIVPreTestTabListProps {
+interface HIVTestingTabListProps {
   patientUuid: string;
 }
 
-const HIVPreTestTabList: React.FC<HIVPreTestTabListProps> = ({ patientUuid }) => {
+const HIVTestingTabList: React.FC<HIVTestingTabListProps> = ({ patientUuid }) => {
   const { t } = useTranslation();
 
   const columns: EncounterListColumn[] = useMemo(
@@ -89,7 +89,7 @@ const HIVPreTestTabList: React.FC<HIVPreTestTabListProps> = ({ patientUuid }) =>
     <EncounterList
       patientUuid={patientUuid}
       encounterType={PreTestEncounterTypeConceptUUID}
-      formList={[{ name: 'HTS Form - WHO', excludedIntents: [] }]}
+      formList={[{ name: 'HTS Pre-Test Counselling', excludedIntents: [] }]}
       columns={columns}
       description={headerTitle}
       headerTitle={headerTitle}
@@ -101,4 +101,4 @@ const HIVPreTestTabList: React.FC<HIVPreTestTabListProps> = ({ patientUuid }) =>
   );
 };
 
-export default HIVPreTestTabList;
+export default HIVTestingTabList;

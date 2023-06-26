@@ -3,7 +3,7 @@ import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@carbon/react';
 import styles from '../common.scss';
 import HtsOverviewList from './tab-list/hts-overview-list.component';
 import { useTranslation } from 'react-i18next';
-import HIVPreTestTabList from './tab-list/pre-test.component';
+import HIVTestingTabList from './tab-list/pre-test.component';
 
 interface OverviewListProps {
   patientUuid: string;
@@ -16,15 +16,11 @@ const HTSPreventionSummary: React.FC<OverviewListProps> = ({ patientUuid }) => {
     <div className={styles.tabContainer}>
       <Tabs>
         <TabList contained>
-          <Tab className="tab-16rem">{t('HtsPreTest', 'Pre Test')}</Tab>
-          <Tab className="tab-12rem">{t('HtsHivTesting', 'HIV Testing')}</Tab>
+          <Tab className="tab-16rem">{t('HtsPreTest', 'HIV Testing')}</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
-            <HIVPreTestTabList patientUuid={patientUuid} />
-          </TabPanel>
-          <TabPanel>
-            <HtsOverviewList patientUuid={patientUuid} />
+            <HIVTestingTabList patientUuid={patientUuid} />
           </TabPanel>
         </TabPanels>
       </Tabs>
